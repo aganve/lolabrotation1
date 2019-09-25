@@ -6,8 +6,7 @@ from necro_uncal_new import model
 import scipy.interpolate
 from pysb.integrate import *
 from simplepso.pso import PSO
-import collections
-​
+import collections​
 model.enable_synth_deg()
 obs_names = ['MLKLa_obs']
 mlkl_obs = 'MLKLa_obs'
