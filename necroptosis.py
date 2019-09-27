@@ -8,7 +8,7 @@ import numpy as np
 from pysb.simulator import ScipyOdeSimulator
 
 # instantiate a model
-Model ()
+Model()
 
 # declare monomers
 Monomer('TNF', ['bCI'])
@@ -51,80 +51,5 @@ Observable('MLKLu_obs', MLKL(bCII=None, state='u'))
 Observable('MLKLp_obs', MLKL(bCII=None, state='p'))
 
 generate_equations(model)
-print('model species')
-print(model.species)
-print('model parameters')
-print(model.parameters)
-print('model odes')
-print(list(model.odes))
-
-tspan = np.linspace(0, 1200,1201) #time span of simulation (start, stop, step)
-result = ScipyOdeSimulator(model, tspan=tspan).run() #run solver of model
-
-plt.figure()
-plt.plot(tspan, result.observables['TNF_obs'][:], lw = 1.5, label = 'TNF_obs') #plot observable
-plt.xlabel('Time min', fontsize=14)
-plt.ylabel('Amount produced [molecules]', fontsize=14)
-plt.title('Necroptosis')
-plt.legend(loc = 'best', fontsize = 12) #add legend to plot
-# plt.savefig('E+S_to_P.pdf') #to save figure
-
-plt.figure()
-plt.plot(tspan, result.observables['CI_inactive_obs'][:], lw = 1.5, label = 'CI_inactive_obs') #plot observable
-plt.xlabel('Time min', fontsize=14)
-plt.ylabel('Amount of produced [molecules]', fontsize=14)
-plt.title('Necroptosis')
-plt.legend(loc = 'best', fontsize = 12) #add legend to plot
-# plt.savefig('E+S_to_P.pdf') #to save figure
-
-plt.figure()
-plt.plot(tspan, result.observables['TNF_CI_CIi_obs'][:], lw = 1.5, label = 'TNF_CI_CIi_obs') #plot observable
-plt.xlabel('Time min', fontsize=14)
-plt.ylabel('Amount of produced [molecules]', fontsize=14)
-plt.title('Necroptosis')
-plt.legend(loc = 'best', fontsize = 12) #add legend to plot
-# plt.savefig('E+S_to_P.pdf') #to save figure
-
-plt.figure()
-plt.plot(tspan, result.observables['CIa_obs'][:], lw = 1.5, label = 'CIa_obs') #plot observable
-plt.xlabel('Time min', fontsize=14)
-plt.ylabel('Amount of produced [molecules]', fontsize=14)
-plt.title('Necroptosis')
-plt.legend(loc = 'best', fontsize = 12) #add legend to plot
-# plt.savefig('E+S_to_P.pdf') #to save figure
-
-plt.figure()
-plt.plot(tspan, result.observables['CIIa_obs'][:], lw = 1.5, label = 'CIIa_obs') #plot observable
-plt.xlabel('Time min', fontsize=14)
-plt.ylabel('Amount of produced [molecules]', fontsize=14)
-plt.title('Necroptosis')
-plt.legend(loc = 'best', fontsize = 12) #add legend to plot
-# plt.savefig('E+S_to_P.pdf') #to save figure
-
-plt.figure()
-plt.plot(tspan, result.observables['CII_MLKL_bind_obs'][:], lw = 1.5, label = 'CII_MLKL_bind_obs') #plot observable
-plt.xlabel('Time min', fontsize=14)
-plt.ylabel('Amount of produced [molecules]', fontsize=14)
-plt.title('Necroptosis')
-plt.legend(loc = 'best', fontsize = 12) #add legend to plot
-# plt.savefig('E+S_to_P.pdf') #to save figure
-
-plt.figure()
-plt.plot(tspan, result.observables['MLKLu_obs'][:], lw = 1.5, label = 'MLKLu_obs') #plot observable
-plt.xlabel('Time min', fontsize=14)
-plt.ylabel('Amount of produced [molecules]', fontsize=14)
-plt.title('Necroptosis')
-plt.legend(loc = 'best', fontsize = 12) #add legend to plot
-# plt.savefig('E+S_to_P.pdf') #to save figure
-
-plt.figure()
-plt.plot(tspan, result.observables['MLKLp_obs'][:], lw = 1.5, label = 'MLKLp_obs') #plot observable
-plt.xlabel('Time min', fontsize=14)
-plt.ylabel('Amount of produced [molecules]', fontsize=14)
-plt.title('Necroptosis')
-plt.legend(loc = 'best', fontsize = 12) #add legend to plot
-# plt.savefig('E+S_to_P.pdf') #to save figure
-plt.show()
-# print('done')
 
 

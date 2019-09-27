@@ -1,12 +1,10 @@
 import matplotlib
-import lib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
-from necro_uncal_new import model
+from necroptosis import model
 import scipy.interpolate
 from pysb.integrate import *
 from simplepso.pso import PSO
-import collections​
 model.enable_synth_deg()
 
 # Declaring our observable: phosphorylated MLKL
@@ -23,14 +21,17 @@ def normalize(trajectories):
 # Linspace refers to generating linearly spaced values
 # Creating a vector of complex numbers of 11 evenly spaced points between 0 and 960
 # E.g., np.linspace(1.0, 5.0, num=10)
-t = np.linspace(0, 960, num=11)
+t = np.linspace(0, 960, num=8)
 solver1 = ScipyOdeSimulator(model, tspan=t)
 
 # Creating a grid of values, all of the same type, and is indexed by a list of non-negative integers (i.e., tuple)
-x10 = np.array([0,2,4,6,8,10,12,14,16,18, 20])
-y10 = np.array([0., 0.001, 0.02, 0.03, 0.04, 0.06, .09, .21, .40, .65, .81])
+# x10 = np.array([0,2,4,6,8,10,12,14,16,18, 20])
+# y10 = np.array([0., 0.001, 0.02, 0.03, 0.04, 0.06, .09, .21, .40, .65, .81])
 
-ydata_norm = y10
+x100 = np.array([30, 90, 270, 480, 600, 720, 840, 960])
+y100 = np.array([0.00885691708746097,0.0161886154261265,0.0373005242261882,0.2798939020159581,0.510, .7797294067, 0.95,1])
+
+ydata_norm = y100
 
 rate_params = model.parameters_rules()
 param_values = np.array([p.value for p in model.parameters])
@@ -52,27 +53,31 @@ def obj_function(params):
     param_values[rate_mask] = 10 ** params_tmp  # don't need to change
     result = solver1.run(param_values=param_values)
     ysim_array1 = result.observables['MLKLp_obs'][:]
-    ysim_norm1 = normalize(ysim_array1)
-​
-    e1 = np.sum((ydata_norm - ysim_norm1) ** 2)
-​
+    ysim_norm = normalize(ysim_array1)
+
+    e1 = np.sum((ydata_norm - ysim_norm) ** 2)
+
     return e1,
 
-  counter = 0
+def run_example():
+    print('run_example')
+    best_pars = np.zeros((100, len(model.parameters_rules())))
     # Here, we initial the class
     # We must provide the cost function and a starting value
     # Provide the bounds, speed, particle, and iterations count
-    for i in range(1000):
+    counter = 0
+    for i in range(100):
+        print("counter: ", counter)
         optimizer = PSO(cost_function=obj_function,start = log10_original_values, verbose=True)
         # We also must set bounds. This can be a single scalar or an array of len(start_position)
         optimizer.set_bounds(parameter_range=2)
         optimizer.set_speed(speed_min=-.25, speed_max=.25)
-        optimizer.run(num_particles=75, num_iterations=25)
+        optimizer.run(num_particles=50, num_iterations=100)
         best_pars[i] = optimizer.best
         print(optimizer.best)
-        # print(i, counter)
-    np.save('optimizer_best_75_50_100TNF',best_pars)
-​
+        counter += 1 #counter = counter + 1
+    np.save('necro_optimizer_best_25_25_926_TNF100',best_pars)
+
 if '__main__' == __name__:
     run_example()
 
