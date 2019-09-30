@@ -1,12 +1,18 @@
+import sys
+sys.path.append('..')
 import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 from necroptosis import model
 import scipy.interpolate
 from pysb.integrate import *
-from simplepso.pso import PSO
+from ParticleSwarmOptimization.simplepso.pso import PSO
 model.enable_synth_deg()
 
+import os
+
+#print(os.getcwd())
+#quit()
 # Declaring our observable: phosphorylated MLKL
 obs_names = ['MLKLp_obs']
 mlklp_obs = 'MLKLp_obs'
@@ -61,22 +67,22 @@ def obj_function(params):
 
 def run_example():
     print('run_example')
-    best_pars = np.zeros((100, len(model.parameters_rules())))
+    best_pars = np.zeros((5000, len(model.parameters_rules())))
     # Here, we initial the class
     # We must provide the cost function and a starting value
     # Provide the bounds, speed, particle, and iterations count
     counter = 0
-    for i in range(100):
+    for i in range(5000):
         print("counter: ", counter)
         optimizer = PSO(cost_function=obj_function,start = log10_original_values, verbose=True)
         # We also must set bounds. This can be a single scalar or an array of len(start_position)
         optimizer.set_bounds(parameter_range=2)
         optimizer.set_speed(speed_min=-.25, speed_max=.25)
-        optimizer.run(num_particles=50, num_iterations=100)
+        optimizer.run(num_particles=25, num_iterations=100)
         best_pars[i] = optimizer.best
         print(optimizer.best)
         counter += 1 #counter = counter + 1
-    np.save('necro_optimizer_best_25_25_926_TNF100',best_pars)
+    np.save('necro_optimizer_best_25_100_927_TNF100',best_pars)
 
 if '__main__' == __name__:
     run_example()
