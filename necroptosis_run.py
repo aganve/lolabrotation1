@@ -16,25 +16,34 @@ import pandas as pd
 # print('model odes')
 # print(list(model.odes))
 
+# load optimized parameters at 25 particles, and TNF conc of 100 ng; calibration ran on 9/27/19
 opt_params = np.load('necro_optimizer_best_25_100_927_TNF100.npy')
+# define length of optimized parameters
 n_pars = len(opt_params)
 all_pars = np.zeros((n_pars, len(model.parameters)))
 
+# rate parameters are model parameter rules (i.e., kinetic rate constants)
 rate_params = model.parameters_rules()
+# parameter values are an array of model parameters (i.e., initial conditions and kinetic rate constants)
 param_values = np.array([p.value for p in model.parameters])
+# mask rate parameters (i.e., kinetic rate constants) from our model parameters
 rate_mask = np.array([p in rate_params for p in model.parameters])
 
+# for every loop...
 for i in range(len(opt_params)):
     par = opt_params[i]
-    param_values[rate_mask] = 10 ** par
+    param_values[rate_mask] = 10 ** par #unlogging param values
     all_pars[i] = param_values
+
 # print(all_pars[:100])
 # all_pars = all_pars[:5]
 x100 = np.array([30, 90, 270, 480, 600, 720, 840, 960]) # time in minutes
 y100 = np.array([0.00885691708746097,0.0161886154261265,0.0373005242261882,0.2798939020159581,0.510, .7797294067, 0.95,1]) # normalized values
 
 tspan = np.linspace(0, 1440, 101) # time span of simulation (start, stop, step)
+# Scipy is a Python library for scientific computing. Scipy is the solver for our model
 result = ScipyOdeSimulator(model, tspan=tspan).run(param_values=all_pars) # run solver of model
+# Simulation results
 df = result.dataframe
 
 plt.figure(figsize=(15,10))
