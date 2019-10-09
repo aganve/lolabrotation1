@@ -1,11 +1,11 @@
 from pylab import *
-from pysb.core import *
+from pysb.core import * # brings in all of the Python classes needed to define a model
 from pysb.bng import *
 from pysb.integrate import *
 from pysb.macros import catalyze
 import matplotlib.pyplot as plt
 import numpy as np
-from pysb.simulator import ScipyOdeSimulator
+from pysb.simulator import ScipyOdeSimulator # Simulating an ODE with SciPy
 
 # instantiate a model
 Model()
@@ -14,16 +14,23 @@ Model()
 # XC = System XC: cystine/glutamate transporter
 # CR = cystine reductase; reduces Cys2 to Cys
 # Cys = cysteine
-# Glu_Cys = glutamyl-cysteine; intermediate produced in the sequence of reactions converting cysteine to GHS
+# Glu_Cys = glutamyl-cysteine; intermediate produced in the sequence of reactions converting cysteine to glutathione (GHS)
 # GSS = glutathione synthetase; converts Glut_Cys to GSH
 # GSH = glutathione; cofactor for GPX4
 
 # declare monomers
-Monomer('Cys2', ['bXC'])
-Monomer('XC', ['bCys2'])
-Monomer('Cys', ['bCys2'])
+Monomer('Cys2', ['b']) # binds cystine reductase (CR) which reduces 1 molecule of cystine to 2 molecules of cysteine
+Monomer('XC', ['b']) # no direct binding between Cys2 and XC
+Monomer('CR', ['b'])
+Monomer('Cys', ['b'])
+Monomer('GCL', ['b'])
+Monomer('GlutCys', ['b'])
+Monomer('GSS', ['b'])
 Monomer('GSH', ['bGPX4'])
-Monomer('GPX4', ['bGSH'])
+Monomer('GPX4', ['bGSH'], {'state': ['i', 'a']})
+Monomer('Peroxide', ['b'])
+Monomer('LipidAlcohol', ['b'])
+
 # Monomer('GCL', ['bCys'])
 # Monomer('Glu_Cys', ['bGSS'])
 # Monomer('GSS', ['bGlu_Cys'])
@@ -35,26 +42,47 @@ Parameter('VPM', 1)
 Parameter ('VCyto', 1)
 Compartment('Env', None, 3, VEnv) # Env doesn't have a parent; it's 3D in volume
 Compartment('PM', Env, 2, VPM) # PM's parent is the Env; it's 2D
-Compartment('Cyto', PM, 3, VCyto) #Cyto's parent is the PM; it's 3D; proteins can move in the x, y, and z direction, therefore 3D
+Compartment('Cyto', PM, 3, VCyto) # Cyto's parent is the PM; it's 3D; proteins can move in the x, y, and z direction, therefore 3D
 
 # input the paramater values
 Parameter('kf1', 1.0e-6)
-Parameter('kr1', 1.0e-3)
 Parameter('kf2', 1.0e-6)
+Parameter('kr2', 1.0e-3)
 Parameter('kf3', 1.0e-6)
 Parameter('kf4', 1.0e-6)
 Parameter('kf5', 1.0e-6)
-Parameter('kr2', 1.0e-3)
+Parameter('kf6', 1.0e-6)
+Parameter('kf7', 1.0e-6)
+Parameter('kr1', 1.0e-3)
+
 Parameter('kr3', 1.0e-3)
 
 # now input the rules
-Rule('Cys2_XC_bind', Cys2(bXC=None) ** Env + XC(bCys2=None) ** PM >> Cys2(bXC=1) ** PM % XC(bCys2=1) ** PM, kf1)
-# not a reaction but translocation across the membrane
-Rule('Cys2_XC_dissociate', Cys2(bXC=1) ** PM % XC(bCys2=1) ** PM >> Cys2(bXC=None) ** Cyto + XC(bCys2=None) ** PM, kf2)
-# not a reaction but translocation across the membrane
-Rule('Cys2_Cys_conversion', Cys2(bXC=None) ** Cyto | Cys(bCys2=None) ** Cyto, kf3, kr1)
-Rule('Cys_GSH_conversion', Cys(bCys2=None) ** Cyto | GSH(bGPX4=None) ** Cyto, kf4, kr2)
-Rule('GSH_GPX4_bind', GSH(bGPX4=None) ** Cyto + GPX4(bGSH=None) ** Cyto | GSH(bGPX4=1) ** Cyto % GPX4(bGSH=1) ** Cyto, kf5, kr3)
+
+# transport Cys2 across the PM via XC transporter
+Rule('Cys2_transport_via_XC', Cys2() ** Env + XC() ** PM >> Cys2() ** Cyto + XC() ** PM, kf1)
+# Rule('Cys2_CR_bind', Cys2(bCR=None) ** Cyto + CR(bCys2=None) ** Cyto | Cys2(bCR=1) ** Cyto % CR(bCys2=1) ** Cyto, kf2, kr2)
+
+# convert Cys2 to Cys via CR catalysis
+catalyze(CR, Cys2, Cys, [kf2, kfr2])
+
+# convert Cys to GlutCys via GCL catalysis
+catalyze(GCL, Cys, GlutCys,[kf3, kr3])
+# Rule('Cys_GSH_conversion', Cys(bCys2=None) ** Cyto | GSH(bGPX4=None) ** Cyto, kf3, kr2)
+
+# convert Glut-Cys to GSH via GSS catalyze
+catalyze(GSS, GlutCys, GSH(b=None), [kf4, kr4])
+
+# GPX4 binds GSH, a necessary cofactor to reduce lipid peroxides to lipid alcohols
+Rule('GSH_GPX4_bind', GSH(bGPX4=None) ** Cyto + GPX4(bGSH=None, state='i') ** Cyto | GSH(bGPX4=1, state='i') ** Cyto % GPX4(bGSH=1) ** Cyto, kf5, kr5)
+
+# GPX4 is activated when GSH binds
+Rule('GPX4_active', GSH(bGPX4=1, state='i') ** Cyto % GPX4(bGSH=1) >> GSH(bGPX4=None) ** Cyto + GPX4(bGSH=None, state='a') ** Cyto, kf6)
+
+# convert lipid peroxide to lipid alcohol via GPX4 catalysis
+catalyze(GPX4(bGSH=None, state='a') ** Cyto, Peroxide, LipidAlcohol, [kf7])
+# Rule('GPX4_bind_peroxide', GPX4(bGSH=None, state='a') ** Cyto + Peroxide(bGPX4=None) ** Cyto >> GPX4(bGSH=1, state='a') ** Cyto % Peroxide(bGPX4=1) ** Cyto, kf6)
+
 
 # Initial Conditions
 Parameter('Cys2_0', 2300)
