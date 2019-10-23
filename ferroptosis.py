@@ -266,127 +266,145 @@ tspan = np.linspace(0, 1440, 1441) # time span of simulation (start, stop, step)
 result = ScipyOdeSimulator(model, tspan=tspan).run() # run solver of model
 
 plt.figure()
-plt.plot(tspan, result.observables['Cys2_Env_obs'][:], lw = 1.5, label = 'Cys2_Env_obs molecules') #plot observable
+plt.plot(tspan, result.observables['PUFA_PL_liperox_obs'][:], lw = 1.5, label = 'PUFA_PL_liperox_obs') #plot observable
 plt.xlabel('Time [min]', fontsize=14)
-plt.ylabel('Amount of Cys2_Env_obs produced [# of molecules]', fontsize=14)
-plt.title('Cys2_Env_obs molecules')
+plt.ylabel('Amount of PUFA_PL_liperox_obs produced [# of molecules]', fontsize=14)
+plt.title('PUFA_PL_liperox_obs molecules')
 plt.legend(loc = 'best', fontsize = 12) # add legend to plot
 # plt.savefig('GSH:GPX4 binding.pdf') # to save figure
 plt.show()
 
 plt.figure()
-plt.plot(tspan, result.observables['Cys2_Cyto_obs'][:], lw = 1.5, label = 'Cys2_Cyto_obs') #plot observable
+plt.plot(tspan, result.observables['FFA_rad_obs'][:], lw = 1.5, label = 'FFA_rad_obs') #plot observable
 plt.xlabel('Time [min]', fontsize=14)
-plt.ylabel('Amount of Cys2_Cyto_obs produced [# of molecules]', fontsize=14)
-plt.title('Cys2_Cyto_obs molecules')
+plt.ylabel('Amount of PFFA_rad_obs produced [# of molecules]', fontsize=14)
+plt.title('FFA_rad_obs molecules')
 plt.legend(loc = 'best', fontsize = 12) # add legend to plot
 # plt.savefig('GSH:GPX4 binding.pdf') # to save figure
 plt.show()
 
-plt.figure()
-plt.plot(tspan, result.observables['CR_obs'][:], lw = 1.5, label = 'CR_obs') #plot observable
-plt.xlabel('Time [min]', fontsize=14)
-plt.ylabel('Amount of CR_obs produced [# of molecules]', fontsize=14)
-plt.title('CR_obs molecules')
-plt.legend(loc = 'best', fontsize = 12) # add legend to plot
-# plt.savefig('GSH:GPX4 binding.pdf') # to save figure
-plt.show()
-
-plt.figure()
-plt.plot(tspan, result.observables['Cys_obs'][:], lw = 1.5, label = 'Cys_obs') #plot observable
-plt.xlabel('Time [min]', fontsize=14)
-plt.ylabel('Amount of Cys_obs produced [# of molecules]', fontsize=14)
-plt.title('Cys_obs_obs molecules')
-plt.legend(loc = 'best', fontsize = 12) # add legend to plot
-# plt.savefig('GSH:GPX4 binding.pdf') # to save figure
-plt.show()
-
-plt.figure()
-plt.plot(tspan, result.observables['GCL_obs'][:], lw = 1.5, label = 'GCL_obs') #plot observable
-plt.xlabel('Time [min]', fontsize=14)
-plt.ylabel('Amount of GCL_obs produced [# of molecules]', fontsize=14)
-plt.title('GCL_obs molecules')
-plt.legend(loc = 'best', fontsize = 12) # add legend to plot
-# plt.savefig('GSH:GPX4 binding.pdf') # to save figure
-plt.show()
-
-plt.figure()
-plt.plot(tspan, result.observables['Glut_Cys_obs'][:], lw = 1.5, label = 'Glut_Cys_obs') #plot observable
-plt.xlabel('Time [min]', fontsize=14)
-plt.ylabel('Amount of Glut_Cys_obs produced [# of molecules]', fontsize=14)
-plt.title('Glut_Cys_obs molecules')
-plt.legend(loc = 'best', fontsize = 12) # add legend to plot
-# plt.savefig('GSH:GPX4 binding.pdf') # to save figure
-plt.show()
-
-plt.figure()
-plt.plot(tspan, result.observables['GSS_obs'][:], lw = 1.5, label = 'GSS_obs') #plot observable
-plt.xlabel('Time [min]', fontsize=14)
-plt.ylabel('Amount of GSS_obs produced [# of molecules]', fontsize=14)
-plt.title('GSS_obs molecules')
-plt.legend(loc = 'best', fontsize = 12) # add legend to plot
-# plt.savefig('GSH:GPX4 binding.pdf') # to save figure
-plt.show()
-
-plt.figure()
-plt.plot(tspan, result.observables['GSH_unbound_red_obs'][:], lw = 1.5, label = 'GSH_unbound_red_obs') #plot observable
-plt.xlabel('Time [min]', fontsize=14)
-plt.ylabel('Amount of GSH_unbound_red_obs produced [# of molecules]', fontsize=14)
-plt.title('GSH_unbound_red_obs molecules')
-plt.legend(loc = 'best', fontsize = 12) # add legend to plot
-# plt.savefig('GSH:GPX4 binding.pdf') # to save figure
-plt.show()
-
-plt.figure()
-plt.plot(tspan, result.observables['GSH_unbound_ox_obs'][:], lw = 1.5, label = 'GSH_unbound_ox_obs') #plot observable
-plt.xlabel('Time [min]', fontsize=14)
-plt.ylabel('Amount of GSH_unbound_ox_obs produced [# of molecules]', fontsize=14)
-plt.title('GSH_unbound_ox_obs molecules')
-plt.legend(loc = 'best', fontsize = 12) # add legend to plot
-# plt.savefig('GSH:GPX4 binding.pdf') # to save figure
-plt.show()
-
-plt.figure()
-plt.plot(tspan, result.observables['GPX4_unbound_inactive_obs'][:], lw = 1.5, label = 'GPX4_unbound_inactive_obs') #plot observable
-plt.xlabel('Time [min]', fontsize=14)
-plt.ylabel('Amount of GPX4_unbound_inactive_obs produced [# of molecules]', fontsize=14)
-plt.title('GPX4_unbound_inactive_obs molecules')
-plt.legend(loc = 'best', fontsize = 12) # add legend to plot
-# plt.savefig('GSH:GPX4 binding.pdf') # to save figure
-plt.show()
-
-plt.figure()
-plt.plot(tspan, result.observables['GPX4_bound_active_obs'][:], lw = 1.5, label = 'GPX4_bound_active_obs') #plot observable
-plt.xlabel('Time [min]', fontsize=14)
-plt.ylabel('Amount of GPX4_bound_active_obs produced [# of molecules]', fontsize=14)
-plt.title('GPX4_bound_active_obs molecules')
-plt.legend(loc = 'best', fontsize = 12) # add legend to plot
-# plt.savefig('GSH:GPX4 binding.pdf') # to save figure
-plt.show()
-
-plt.figure()
-plt.plot(tspan, result.observables['Fe3_Env_obs'][:], lw = 1.5, label = 'Fe3_Env_obs') #plot observable
-plt.xlabel('Time [min]', fontsize=14)
-plt.ylabel('Amount of Fe3_Env_obs produced [# of molecules]', fontsize=14)
-plt.title('Fe3_Env_obs molecules')
-plt.legend(loc = 'best', fontsize = 12) # add legend to plot
-# plt.savefig('GSH:GPX4 binding.pdf') # to save figure
-plt.show()
-
-plt.figure()
-plt.plot(tspan, result.observables['Fe3_Env_obs'][:], lw = 1.5, label = 'Fe3_Env_obs') #plot observable
-plt.xlabel('Time [min]', fontsize=14)
-plt.ylabel('Amount of Fe3_Env_obs produced [# of molecules]', fontsize=14)
-plt.title('Fe3_Env_obs molecules')
-plt.legend(loc = 'best', fontsize = 12) # add legend to plot
-# plt.savefig('GSH:GPX4 binding.pdf') # to save figure
-plt.show()
-
-plt.figure()
-plt.plot(tspan, result.observables['Transferrin_Env_obs'][:], lw = 1.5, label = 'Fe3_Env_obs') #plot observable
-plt.xlabel('Time [min]', fontsize=14)
-plt.ylabel('Amount of Fe3_Env_obs produced [# of molecules]', fontsize=14)
-plt.title('Fe3_Env_obs molecules')
-plt.legend(loc = 'best', fontsize = 12) # add legend to plot
-# plt.savefig('GSH:GPX4 binding.pdf') # to save figure
-plt.show()
+# plt.figure()
+# plt.plot(tspan, result.observables['Cys2_Env_obs'][:], lw = 1.5, label = 'Cys2_Env_obs molecules') #plot observable
+# plt.xlabel('Time [min]', fontsize=14)
+# plt.ylabel('Amount of Cys2_Env_obs produced [# of molecules]', fontsize=14)
+# plt.title('Cys2_Env_obs molecules')
+# plt.legend(loc = 'best', fontsize = 12) # add legend to plot
+# # plt.savefig('GSH:GPX4 binding.pdf') # to save figure
+# plt.show()
+#
+# plt.figure()
+# plt.plot(tspan, result.observables['Cys2_Cyto_obs'][:], lw = 1.5, label = 'Cys2_Cyto_obs') #plot observable
+# plt.xlabel('Time [min]', fontsize=14)
+# plt.ylabel('Amount of Cys2_Cyto_obs produced [# of molecules]', fontsize=14)
+# plt.title('Cys2_Cyto_obs molecules')
+# plt.legend(loc = 'best', fontsize = 12) # add legend to plot
+# # plt.savefig('GSH:GPX4 binding.pdf') # to save figure
+# plt.show()
+#
+# plt.figure()
+# plt.plot(tspan, result.observables['CR_obs'][:], lw = 1.5, label = 'CR_obs') #plot observable
+# plt.xlabel('Time [min]', fontsize=14)
+# plt.ylabel('Amount of CR_obs produced [# of molecules]', fontsize=14)
+# plt.title('CR_obs molecules')
+# plt.legend(loc = 'best', fontsize = 12) # add legend to plot
+# # plt.savefig('GSH:GPX4 binding.pdf') # to save figure
+# plt.show()
+#
+# plt.figure()
+# plt.plot(tspan, result.observables['Cys_obs'][:], lw = 1.5, label = 'Cys_obs') #plot observable
+# plt.xlabel('Time [min]', fontsize=14)
+# plt.ylabel('Amount of Cys_obs produced [# of molecules]', fontsize=14)
+# plt.title('Cys_obs_obs molecules')
+# plt.legend(loc = 'best', fontsize = 12) # add legend to plot
+# # plt.savefig('GSH:GPX4 binding.pdf') # to save figure
+# plt.show()
+#
+# plt.figure()
+# plt.plot(tspan, result.observables['GCL_obs'][:], lw = 1.5, label = 'GCL_obs') #plot observable
+# plt.xlabel('Time [min]', fontsize=14)
+# plt.ylabel('Amount of GCL_obs produced [# of molecules]', fontsize=14)
+# plt.title('GCL_obs molecules')
+# plt.legend(loc = 'best', fontsize = 12) # add legend to plot
+# # plt.savefig('GSH:GPX4 binding.pdf') # to save figure
+# plt.show()
+#
+# plt.figure()
+# plt.plot(tspan, result.observables['Glut_Cys_obs'][:], lw = 1.5, label = 'Glut_Cys_obs') #plot observable
+# plt.xlabel('Time [min]', fontsize=14)
+# plt.ylabel('Amount of Glut_Cys_obs produced [# of molecules]', fontsize=14)
+# plt.title('Glut_Cys_obs molecules')
+# plt.legend(loc = 'best', fontsize = 12) # add legend to plot
+# # plt.savefig('GSH:GPX4 binding.pdf') # to save figure
+# plt.show()
+#
+# plt.figure()
+# plt.plot(tspan, result.observables['GSS_obs'][:], lw = 1.5, label = 'GSS_obs') #plot observable
+# plt.xlabel('Time [min]', fontsize=14)
+# plt.ylabel('Amount of GSS_obs produced [# of molecules]', fontsize=14)
+# plt.title('GSS_obs molecules')
+# plt.legend(loc = 'best', fontsize = 12) # add legend to plot
+# # plt.savefig('GSH:GPX4 binding.pdf') # to save figure
+# plt.show()
+#
+# plt.figure()
+# plt.plot(tspan, result.observables['GSH_unbound_red_obs'][:], lw = 1.5, label = 'GSH_unbound_red_obs') #plot observable
+# plt.xlabel('Time [min]', fontsize=14)
+# plt.ylabel('Amount of GSH_unbound_red_obs produced [# of molecules]', fontsize=14)
+# plt.title('GSH_unbound_red_obs molecules')
+# plt.legend(loc = 'best', fontsize = 12) # add legend to plot
+# # plt.savefig('GSH:GPX4 binding.pdf') # to save figure
+# plt.show()
+#
+# plt.figure()
+# plt.plot(tspan, result.observables['GSH_unbound_ox_obs'][:], lw = 1.5, label = 'GSH_unbound_ox_obs') #plot observable
+# plt.xlabel('Time [min]', fontsize=14)
+# plt.ylabel('Amount of GSH_unbound_ox_obs produced [# of molecules]', fontsize=14)
+# plt.title('GSH_unbound_ox_obs molecules')
+# plt.legend(loc = 'best', fontsize = 12) # add legend to plot
+# # plt.savefig('GSH:GPX4 binding.pdf') # to save figure
+# plt.show()
+#
+# plt.figure()
+# plt.plot(tspan, result.observables['GPX4_unbound_inactive_obs'][:], lw = 1.5, label = 'GPX4_unbound_inactive_obs') #plot observable
+# plt.xlabel('Time [min]', fontsize=14)
+# plt.ylabel('Amount of GPX4_unbound_inactive_obs produced [# of molecules]', fontsize=14)
+# plt.title('GPX4_unbound_inactive_obs molecules')
+# plt.legend(loc = 'best', fontsize = 12) # add legend to plot
+# # plt.savefig('GSH:GPX4 binding.pdf') # to save figure
+# plt.show()
+#
+# plt.figure()
+# plt.plot(tspan, result.observables['GPX4_bound_active_obs'][:], lw = 1.5, label = 'GPX4_bound_active_obs') #plot observable
+# plt.xlabel('Time [min]', fontsize=14)
+# plt.ylabel('Amount of GPX4_bound_active_obs produced [# of molecules]', fontsize=14)
+# plt.title('GPX4_bound_active_obs molecules')
+# plt.legend(loc = 'best', fontsize = 12) # add legend to plot
+# # plt.savefig('GSH:GPX4 binding.pdf') # to save figure
+# plt.show()
+#
+# plt.figure()
+# plt.plot(tspan, result.observables['Fe3_Env_obs'][:], lw = 1.5, label = 'Fe3_Env_obs') #plot observable
+# plt.xlabel('Time [min]', fontsize=14)
+# plt.ylabel('Amount of Fe3_Env_obs produced [# of molecules]', fontsize=14)
+# plt.title('Fe3_Env_obs molecules')
+# plt.legend(loc = 'best', fontsize = 12) # add legend to plot
+# # plt.savefig('GSH:GPX4 binding.pdf') # to save figure
+# plt.show()
+#
+# plt.figure()
+# plt.plot(tspan, result.observables['Fe3_Env_obs'][:], lw = 1.5, label = 'Fe3_Env_obs') #plot observable
+# plt.xlabel('Time [min]', fontsize=14)
+# plt.ylabel('Amount of Fe3_Env_obs produced [# of molecules]', fontsize=14)
+# plt.title('Fe3_Env_obs molecules')
+# plt.legend(loc = 'best', fontsize = 12) # add legend to plot
+# # plt.savefig('GSH:GPX4 binding.pdf') # to save figure
+# plt.show()
+#
+# plt.figure()
+# plt.plot(tspan, result.observables['Transferrin_Env_obs'][:], lw = 1.5, label = 'Fe3_Env_obs') #plot observable
+# plt.xlabel('Time [min]', fontsize=14)
+# plt.ylabel('Amount of Fe3_Env_obs produced [# of molecules]', fontsize=14)
+# plt.title('Fe3_Env_obs molecules')
+# plt.legend(loc = 'best', fontsize = 12) # add legend to plot
+# # plt.savefig('GSH:GPX4 binding.pdf') # to save figure
+# plt.show()
