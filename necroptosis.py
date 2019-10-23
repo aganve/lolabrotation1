@@ -43,7 +43,7 @@ Initial(MLKL(bCII=None, state='u'), MLKL_0)
 # observable
 Observable('TNF_obs', TNF(bCI=None))
 Observable('CI_inactive_obs', CI(bTNF=None, state='i'))
-Observable('TNF_CI_CIi_obs', TNF(bCI=1) % CI(bTNF=1, state='i'))
+Observable('TNF_CI_obs', TNF(bCI=1) % CI(bTNF=1, state='i'))
 Observable('CIa_obs', CI(bTNF=None, state='a'))
 Observable('CIIa_obs', CII(bMLKL=None, state='a'))
 Observable('CII_MLKL_bind_obs', CII(bMLKL=1, state='a') % MLKL(bCII=1, state='u'))
